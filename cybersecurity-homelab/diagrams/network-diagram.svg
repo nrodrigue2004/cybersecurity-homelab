@@ -1,0 +1,116 @@
+<svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg" font-family="monospace">
+  <!-- Background -->
+  <rect width="900" height="620" fill="#0d1117"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" fill="#e6edf3" font-size="18" font-weight="bold">Cybersecurity Homelab — Network Topology</text>
+
+  <!-- Internet -->
+  <rect x="370" y="55" width="160" height="40" rx="8" fill="#21262d" stroke="#30363d" stroke-width="1.5"/>
+  <text x="450" y="80" text-anchor="middle" fill="#8b949e" font-size="13">🌐 Internet</text>
+
+  <!-- Arrow down to work network -->
+  <line x1="450" y1="95" x2="450" y2="120" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- Work Network -->
+  <rect x="320" y="120" width="260" height="45" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+  <text x="450" y="139" text-anchor="middle" fill="#8b949e" font-size="12">Work Network</text>
+  <text x="450" y="156" text-anchor="middle" fill="#484f58" font-size="11">192.168.1.0/24</text>
+
+  <!-- Arrow to Proxmox -->
+  <line x1="450" y1="165" x2="450" y2="190" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- Proxmox -->
+  <rect x="340" y="190" width="220" height="50" rx="8" fill="#1c2128" stroke="#388bfd" stroke-width="1.5"/>
+  <text x="450" y="211" text-anchor="middle" fill="#388bfd" font-size="13" font-weight="bold">Proxmox VE</text>
+  <text x="450" y="230" text-anchor="middle" fill="#8b949e" font-size="11">192.168.1.200 (vmbr0)</text>
+
+  <!-- Arrow to pfSense -->
+  <line x1="450" y1="240" x2="450" y2="265" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- pfSense -->
+  <rect x="330" y="265" width="240" height="55" rx="8" fill="#1c2128" stroke="#d29922" stroke-width="1.5"/>
+  <text x="450" y="287" text-anchor="middle" fill="#d29922" font-size="13" font-weight="bold">pfSense + Tailscale</text>
+  <text x="450" y="303" text-anchor="middle" fill="#8b949e" font-size="10">WAN: 192.168.1.63  |  LAN: 192.168.50.1</text>
+  <text x="450" y="316" text-anchor="middle" fill="#484f58" font-size="10">Firewall / Gateway / DHCP / VPN</text>
+
+  <!-- Lab network label -->
+  <text x="450" y="345" text-anchor="middle" fill="#484f58" font-size="11">── vmbr1 · 192.168.50.0/24 ──</text>
+
+  <!-- Horizontal spine line -->
+  <line x1="80" y1="360" x2="820" y2="360" stroke="#30363d" stroke-width="1.5"/>
+  <!-- Vertical from pfSense to spine -->
+  <line x1="450" y1="320" x2="450" y2="360" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- Drop lines to VMs -->
+  <line x1="80" y1="360" x2="80" y2="395" stroke="#30363d" stroke-width="1.5"/>
+  <line x1="220" y1="360" x2="220" y2="395" stroke="#30363d" stroke-width="1.5"/>
+  <line x1="370" y1="360" x2="370" y2="395" stroke="#30363d" stroke-width="1.5"/>
+  <line x1="530" y1="360" x2="530" y2="395" stroke="#30363d" stroke-width="1.5"/>
+  <line x1="680" y1="360" x2="680" y2="395" stroke="#30363d" stroke-width="1.5"/>
+  <line x1="820" y1="360" x2="820" y2="395" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- Kali -->
+  <rect x="25" y="395" width="110" height="70" rx="8" fill="#1c2128" stroke="#f85149" stroke-width="1.5"/>
+  <text x="80" y="418" text-anchor="middle" fill="#f85149" font-size="12" font-weight="bold">Kali Linux</text>
+  <text x="80" y="434" text-anchor="middle" fill="#8b949e" font-size="10">.107</text>
+  <text x="80" y="450" text-anchor="middle" fill="#484f58" font-size="10">Attacker</text>
+  <text x="80" y="463" text-anchor="middle" fill="#484f58" font-size="9">SSH :22</text>
+
+  <!-- Metasploitable -->
+  <rect x="160" y="395" width="120" height="70" rx="8" fill="#1c2128" stroke="#f85149" stroke-width="1.5"/>
+  <text x="220" y="415" text-anchor="middle" fill="#f85149" font-size="11" font-weight="bold">Metasploitable</text>
+  <text x="220" y="430" text-anchor="middle" fill="#8b949e" font-size="10">.108</text>
+  <text x="220" y="446" text-anchor="middle" fill="#484f58" font-size="10">Vuln Target</text>
+  <text x="220" y="460" text-anchor="middle" fill="#484f58" font-size="9">msfadmin/msfadmin</text>
+
+  <!-- Ubuntu Server -->
+  <rect x="305" y="395" width="130" height="70" rx="8" fill="#1c2128" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="370" y="415" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="bold">Ubuntu Server</text>
+  <text x="370" y="430" text-anchor="middle" fill="#8b949e" font-size="10">.109</text>
+  <text x="370" y="446" text-anchor="middle" fill="#484f58" font-size="10">Docker Host</text>
+  <text x="370" y="460" text-anchor="middle" fill="#484f58" font-size="9">DVWA :8080</text>
+
+  <!-- Windows Server -->
+  <rect x="460" y="395" width="140" height="70" rx="8" fill="#1c2128" stroke="#388bfd" stroke-width="1.5"/>
+  <text x="530" y="415" text-anchor="middle" fill="#388bfd" font-size="11" font-weight="bold">Windows Server</text>
+  <text x="530" y="430" text-anchor="middle" fill="#8b949e" font-size="10">.10</text>
+  <text x="530" y="446" text-anchor="middle" fill="#484f58" font-size="10">AD DC · lab.local</text>
+  <text x="530" y="460" text-anchor="middle" fill="#484f58" font-size="9">RDP :3389</text>
+
+  <!-- Windows 11 -->
+  <rect x="615" y="395" width="130" height="70" rx="8" fill="#1c2128" stroke="#388bfd" stroke-width="1.5"/>
+  <text x="680" y="415" text-anchor="middle" fill="#388bfd" font-size="11" font-weight="bold">Windows 11</text>
+  <text x="680" y="430" text-anchor="middle" fill="#8b949e" font-size="10">.111</text>
+  <text x="680" y="446" text-anchor="middle" fill="#484f58" font-size="10">Workstation</text>
+  <text x="680" y="460" text-anchor="middle" fill="#484f58" font-size="9">RDP :3389</text>
+
+  <!-- Security Onion -->
+  <rect x="760" y="395" width="120" height="70" rx="8" fill="#1c2128" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="820" y="415" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="bold">Security Onion</text>
+  <text x="820" y="430" text-anchor="middle" fill="#8b949e" font-size="10">.20</text>
+  <text x="820" y="446" text-anchor="middle" fill="#484f58" font-size="10">IDS / SIEM</text>
+  <text x="820" y="460" text-anchor="middle" fill="#484f58" font-size="9">HTTPS :443</text>
+
+  <!-- Tailscale remote access arrow -->
+  <line x1="450" y1="290" x2="760" y2="290" stroke="#6e40c9" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <rect x="760" y="270" width="120" height="40" rx="8" fill="#1c2128" stroke="#6e40c9" stroke-width="1.5"/>
+  <text x="820" y="287" text-anchor="middle" fill="#6e40c9" font-size="11" font-weight="bold">Tailscale</text>
+  <text x="820" y="302" text-anchor="middle" fill="#484f58" font-size="10">Remote Access</text>
+
+  <!-- Legend -->
+  <rect x="25" y="500" width="500" height="100" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="40" y="520" fill="#8b949e" font-size="12" font-weight="bold">Legend</text>
+  <rect x="40" y="530" width="12" height="12" rx="2" fill="#f85149"/>
+  <text x="58" y="541" fill="#8b949e" font-size="11">Offensive / Vulnerable</text>
+  <rect x="40" y="550" width="12" height="12" rx="2" fill="#3fb950"/>
+  <text x="58" y="561" fill="#8b949e" font-size="11">Defensive / Infrastructure</text>
+  <rect x="40" y="570" width="12" height="12" rx="2" fill="#388bfd"/>
+  <text x="58" y="581" fill="#8b949e" font-size="11">Windows / Active Directory</text>
+  <rect x="220" y="530" width="12" height="12" rx="2" fill="#6e40c9"/>
+  <text x="238" y="541" fill="#8b949e" font-size="11">Remote Access (Tailscale)</text>
+  <rect x="220" y="550" width="12" height="12" rx="2" fill="#d29922"/>
+  <text x="238" y="561" fill="#8b949e" font-size="11">Firewall / Gateway</text>
+  <line x1="220" y1="576" x2="232" y2="576" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="238" y="581" fill="#8b949e" font-size="11">External / Internet traffic</text>
+</svg>

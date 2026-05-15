@@ -1,0 +1,28 @@
+# VM images and ISOs
+*.iso
+*.vmdk
+*.qcow2
+*.vhd
+*.ova
+*.ovf
+
+# Credentials and secrets
+*.key
+*.pem
+*.crt
+secrets/
+credentials/
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

@@ -1,32 +1,28 @@
 # Security Onion Configuration Notes
 
-## Network
-- Hostname: nathan
-- Management Interface: ens18
-- Management IP: 192.168.50.20/24
-- Gateway: 192.168.50.1
-- DNS: 8.8.8.8 8.8.4.4
-- Monitoring Interface: bond0 (ens19 as slave)
+## Network Details
+
+| Setting | Value |
+|---------|-------|
+| Hostname | nathan |
+| Management NIC | ens18 |
+| Management IP | 192.168.50.20/24 |
+| Gateway | 192.168.50.1 |
+| DNS | 8.8.8.8, 8.8.4.4 |
+| Monitoring NIC | bond0 (ens19 as slave) |
+| Version | Security Onion 2.4.211 Standalone |
 
 ## Web UI Access
-- URL: https://192.168.50.20
-- Allow analyst access: sudo so-firewall includehost analyst 192.168.1.0/24
+URL: `https://192.168.50.20`
 
-## Critical: Proxmox Traffic Mirroring
-By default Proxmox bridges don't forward inter-VM traffic to other VMs.
-Two fixes required:
+To allow analyst access from a subnet:
+```bash
+sudo so-firewall includehost analyst 192.168.1.0/24
+sudo so-firewall --apply apply
+```
 
-### 1. Proxmox - Mirror vmbr1 traffic to Security Onion (add to /etc/network/interfaces under vmbr1):
-post-up tc qdisc add dev vmbr1 handle ffff: ingress && tc filter add dev vmbr1 parent ffff: matchall action mirred egress mirror dev tap105i1
+## ⚠️ Critical: Proxmox Traffic Mirroring
 
-### 2. Security Onion - Add ens19 to bond0 on boot (/etc/rc.d/rc.local):
-ip link set bond0 mtu 1500
-ip link set ens19 down
-ip link set ens19 master bond0
-ip link set ens19 up
-ip link set bond0 up
-ip link set bond0 promisc on
-ip link set ens19 promisc on
+Proxmox Linux bridges don't forward inter-VM traffic to other VMs by default. Two persistent fixes are required for Security Onion to see lab traffic.
 
-## Version
-Security Onion 2.4.211 - Standalone
+**On Proxmox** — add to `/etc/network/interfaces` under the `vmbr1` block:

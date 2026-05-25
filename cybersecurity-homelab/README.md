@@ -9,7 +9,7 @@ A fully self-hosted enterprise-grade cybersecurity lab built on a mini PC using 
 | Component | Spec |
 |-----------|------|
 | CPU | Intel i7-10900K |
-| RAM | 48GB |
+| RAM | 64GB |
 | Storage | 2TB SSD |
 | Hypervisor | Proxmox VE |
 

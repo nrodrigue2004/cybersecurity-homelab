@@ -15,7 +15,7 @@ A fully self-hosted enterprise-grade cybersecurity lab built on a mini PC using 
 
 ---
 
-## 🗺️ Network Topology
+##  Network Topology
 
 ```
                         INTERNET
@@ -57,7 +57,7 @@ Advertised routes: 192.168.1.0/24, 192.168.50.0/24
 
 ---
 
-## 🖧 VM Inventory
+##  VM Inventory
 
 | VM ID | Name | OS | IP | Role |
 |-------|------|----|----|------|

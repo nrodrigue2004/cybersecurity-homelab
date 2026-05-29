@@ -1,10 +1,10 @@
-# 🔐 Cybersecurity Homelab
+#  Cybersecurity Homelab
 
 A fully self-hosted enterprise-grade cybersecurity lab built on a mini PC using Proxmox. Designed for hands-on offensive and defensive security practice, simulating a realistic corporate environment with attacker infrastructure, vulnerable targets, Active Directory, web applications, and full network monitoring.
 
 ---
 
-## 🖥️ Hardware
+##  Hardware
 
 | Component | Spec |
 |-----------|------|
@@ -71,25 +71,25 @@ Advertised routes: 192.168.1.0/24, 192.168.50.0/24
 
 ---
 
-## 🧰 Lab Components
+##  Lab Components
 
-### 🔴 Offensive
+###  Offensive
 - **Kali Linux** — Full attacker workstation with all standard Kali tools pre-installed
 - **Metasploit Framework** — Available on Kali for exploitation
 
-### 🟠 Vulnerable Targets
+###  Vulnerable Targets
 - **Metasploitable 2** — Intentionally vulnerable Linux VM for network/service exploitation practice
 - **DVWA (Damn Vulnerable Web App)** — Dockerized web app for SQL injection, XSS, file upload, command injection, and more
 - **WebGoat** — OWASP's interactive web vulnerability learning platform
 
-### 🟡 Infrastructure
+###  Infrastructure
 - **pfSense** — Primary firewall, DHCP server, DNS forwarder, and Tailscale subnet router
 - **Windows Server 2022** — Active Directory Domain Controller for `lab.local`
   - Domain: `lab.local`
   - Users: `jsmith` (standard user), `labadmin` (domain admin)
 - **Windows 11 Workstation** — Domain-joined endpoint simulating a corporate workstation
 
-### 🟢 Defensive / Monitoring
+###  Defensive / Monitoring
 - **Security Onion 2.4 (Standalone)** — Full monitoring stack including:
   - Zeek (network analysis)
   - Suricata (IDS/IPS)
@@ -100,7 +100,7 @@ Advertised routes: 192.168.1.0/24, 192.168.50.0/24
 
 ---
 
-## 🌐 Remote Access
+##  Remote Access
 
 Remote access is handled via **Tailscale** with pfSense configured as a subnet router. This allows access to all lab VMs (`192.168.50.0/24`) and the Proxmox host (`192.168.1.0/24`) from anywhere without exposing any ports publicly.
 
@@ -114,7 +114,7 @@ Remote access is handled via **Tailscale** with pfSense configured as a subnet r
 
 ---
 
-## 🐳 Docker Services (Ubuntu Server)
+##  Docker Services (Ubuntu Server)
 
 | Service | Port | URL |
 |---------|------|-----|
@@ -125,7 +125,7 @@ Both containers are configured with `--restart always` to survive reboots.
 
 ---
 
-## 🔑 Access Methods
+##  Access Methods
 
 | VM | Method | Address |
 |----|--------|---------|
@@ -139,7 +139,7 @@ Both containers are configured with `--restart always` to survive reboots.
 
 ---
 
-## 🛡️ Attack Scenarios
+##  Attack Scenarios
 
 This lab supports a wide range of offensive security exercises:
 
@@ -151,7 +151,7 @@ This lab supports a wide range of offensive security exercises:
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 cybersecurity-homelab/
@@ -169,7 +169,7 @@ cybersecurity-homelab/
 
 ---
 
-## 🚧 Status
+##  Status
 
 | Component | Status |
 |-----------|--------|

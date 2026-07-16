@@ -14,10 +14,8 @@
 
 ## Tailscale
 - Package: pfSense-pkg-Tailscale
-- Node name: homelab
-- Tailscale IP: 100.108.187.106
-- Advertised routes: 192.168.1.0/24, 192.168.50.0/24
-- Both routes approved in Tailscale admin console
+- Role: Subnet router
+- Routes approved in Tailscale admin console
 
 ## Web GUI Access
 - LAN: http://192.168.50.1 (from lab network)

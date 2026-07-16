@@ -18,10 +18,5 @@
 - Routes approved in Tailscale admin console
 
 ## Web GUI Access
-- LAN: http://192.168.50.1 (from lab network)
-- WAN: http://192.168.1.63 (WAN GUI access rule enabled)
-- Note: HTTPS unavailable due to anti-lockout rule — HTTP only
+-Management protocol: HTTPS
 
-## Firewall Notes
-- Default LAN-to-WAN NAT enabled (lab VMs have internet access)
-- WAN GUI access rule added via `easyrule pass wan tcp any any 80`

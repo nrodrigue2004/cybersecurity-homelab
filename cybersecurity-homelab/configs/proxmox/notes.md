@@ -1,34 +1,17 @@
 # Proxmox Configuration Notes
 
-## Host
-- Hostname: homelab04
-- IP: 192.168.1.200/24
-- Gateway: 192.168.1.1
-- Web UI: https://192.168.1.200:8006
+## Purpose
+Proxmox VE is the hypervisor platform for the homelab virtual machines.
 
-## Network Bridges
+## Host design
+- The host is documented publicly as <PROXMOX_HOST>; its management address and web interface URL are intentionally omitted.
+- Separate virtual bridges connect the upstream path and the isolated internal lab segment.
+- Public examples refer to <UPSTREAM_SUBNET> and <LAB_SUBNET> rather than the live network plan.
 
-| Bridge | Port | Subnet | Purpose |
-|--------|------|--------|---------|
-| vmbr0 | nic1 | 192.168.1.0/24 | Upstream/work network |
-| vmbr1 | none | 192.168.50.0/24 | Internal lab network |
+## Virtual machine inventory
+The environment hosts pfSense, Windows Server with Active Directory, a Windows workstation, Ubuntu application services, Kali Linux, Metasploitable, and Security Onion. Resource allocation is adjusted as lab requirements change and is not treated as a production capacity plan.
 
-## VM Summary
-
-| ID | Name | Cores | RAM | Disk | Bridge |
-|----|------|-------|-----|------|--------|
-| 100 | pfsense | 2 | 2GB | 20GB | vmbr0 + vmbr1 |
-| 101 | kali-attacker | 2 | 4GB | 40GB | vmbr1 |
-| 102 | ubuntu-server | 2 | 4GB | 40GB | vmbr1 |
-| 103 | windows-server | 2 | 4GB | 60GB | vmbr1 |
-| 104 | windows-workstation | 2 | 6GB | 60GB | vmbr1 |
-| 105 | security-onion | 4 | 12GB | 200GB | vmbr1 |
-| 200 | metasploitable | 1 | 512MB | 8GB | vmbr1 |
-
-## ISO Storage
-- Location: /var/lib/vz/template/iso/
-- Storage pool: local
-
-## VM Storage
-- Storage pool: pve-data
-- Total: ~909GB
+## Administrative practice
+- Apply host updates deliberately and validate VM networking after maintenance.
+- Keep backups and exported VM configurations private because they may contain machine names, network settings, or credentials.
+- Document changes that affect segmentation, monitoring visibility, or domain services.

@@ -1,40 +1,17 @@
 # Security Onion Configuration Notes
 
-## Network Details
+## Purpose
+Security Onion is used to practice network security monitoring, investigation, and log analysis in the isolated lab.
 
-| Setting | Value |
-|---------|-------|
-| Hostname | nathan |
-| Management NIC | ens18 |
-| Management IP | 192.168.50.20/24 |
-| Gateway | 192.168.50.1 |
-| DNS | 8.8.8.8, 8.8.4.4 |
-| Monitoring NIC | bond0 (ens19 as slave) |
-| Version | Security Onion 2.4.211 Standalone |
+## Monitoring design
+- The sensor observes a mirrored copy of selected internal lab traffic.
+- Zeek and Suricata concepts are used to examine network metadata and alerts.
+- The management interface is represented publicly as <SECURITY_ONION_HOST>; real hostnames, addresses, and console URLs are not published.
 
-## Web UI Access
-URL: `https://192.168.50.20`
+## Defensive operations practice
+- Review available telemetry after approved lab activity.
+- Document the data source, hypothesis, time window, observations, and limitations before drawing conclusions.
+- Keep event exports, PCAPs, dashboards, and raw logs private because they may contain identifiers or user activity.
 
-To allow analyst access from a subnet:
-```bash
-sudo so-firewall includehost analyst 192.168.1.0/24
-sudo so-firewall --apply apply
-```
-
-## ⚠️ Critical: Proxmox Traffic Mirroring
-
-Proxmox Linux bridges don't forward inter-VM traffic to other VMs by default. Two persistent fixes are required for Security Onion to see lab traffic.
-
-**On Proxmox** — add to `/etc/network/interfaces` under the `vmbr1` block:
-post-up tc qdisc add dev vmbr1 handle ffff: ingress && tc filter add dev vmbr1 parent ffff: matchall action mirred egress mirror dev tap105i1
-
-**On Security Onion** — add to `/etc/rc.d/rc.local`:
-```bash
-ip link set bond0 mtu 1500
-ip link set ens19 down
-ip link set ens19 master bond0
-ip link set ens19 up
-ip link set bond0 up
-ip link set bond0 promisc on
-ip link set ens19 promisc on
-```
+## Validation
+Any monitoring or detection exercise should identify its test scope, expected network evidence, observed evidence, and cleanup steps. This repository does not claim detections that have not been documented with supporting evidence.

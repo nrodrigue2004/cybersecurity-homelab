@@ -1,28 +1,53 @@
-# VM images and ISOs
+# VM images and exports
 *.iso
 *.vmdk
 *.qcow2
 *.vhd
+*.vhdx
 *.ova
 *.ovf
 
-# Credentials and secrets
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.secret
+*.token
+*.password
+secrets/
+credentials/
+private/
+
+# Keys and certificates
 *.key
 *.pem
 *.crt
-secrets/
-credentials/
+*.cer
+*.p12
+*.pfx
+*.jks
+id_rsa
+id_ed25519
 
-# Editor files
+# Terraform state
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Potentially sensitive captures and exports
+*.pcap
+*.pcapng
+*.cap
+firewall-backups/
+pfsense-backups/
+security-onion-exports/
+siem-exports/
+
+# Editor and OS metadata
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-
-# OS files
 .DS_Store
 Thumbs.db
-
-# Logs
-*.log

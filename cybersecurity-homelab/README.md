@@ -1,186 +1,88 @@
-#  Cybersecurity Homelab
+# Enterprise Cybersecurity Homelab
 
-A fully self-hosted enterprise-grade cybersecurity lab built on a mini PC using Proxmox. Designed for hands-on offensive and defensive security practice, simulating a realistic corporate environment with attacker infrastructure, vulnerable targets, Active Directory, web applications, and full network monitoring.
+A self-hosted cybersecurity practice environment built with Proxmox. This portfolio documents hands-on virtualization, network security, Windows and Linux administration, security monitoring, and controlled testing in an isolated lab.
 
----
+## Project objectives
 
-##  Hardware
+- Configure and document a segmented virtual lab.
+- Practice Active Directory, Windows endpoint, Linux server, and firewall administration.
+- Study SIEM, IDS/NSM, log analysis, threat hunting, and incident-response workflows.
+- Perform vulnerability assessment and attack simulation only against lab-owned, intentionally vulnerable systems.
 
-| Component | Spec |
-|-----------|------|
-| CPU | Intel i7-10900K |
-| RAM | 64GB |
-| Storage | 2TB SSD |
-| Hypervisor | Proxmox VE |
+## Architecture overview
 
----
+Proxmox hosts the virtual environment. pfSense separates an upstream network from an internal lab segment. Windows Server provides Active Directory to a Windows 11 workstation. Ubuntu hosts DVWA and WebGoat. Kali and Metasploitable support controlled testing. Security Onion provides monitoring. Tailscale enables private remote administration without publishing management services.
 
-##  Network Topology
+## Technology stack
 
-```
-                        INTERNET
-                            │
-                    ┌───────▼───────┐
-                    │  Work Network │
-                    │ 192.168.1.0/24│
-                    └───────┬───────┘
-                            │
-                    ┌───────▼───────┐
-                    │    Proxmox    │
-                    │ 192.168.1.200 │
-                    │    (vmbr0)    │
-                    └───────┬───────┘
-                            │
-                    ┌───────▼───────┐
-                    │   pfSense     │  ← WAN: 192.168.1.63
-                    │   Firewall    │  ← LAN: 192.168.50.1
-                    └───────┬───────┘
-                            │ vmbr1 (192.168.50.0/24)
-          ┌─────────────────┼─────────────────────────┐
-          │                 │                          │
-  ┌───────▼──────┐  ┌───────▼──────┐        ┌────────▼───────┐
-  │     Kali     │  │ Metasploitable│        │  Ubuntu Server │
-  │ 192.168.50   │  │ 192.168.50   │        │  192.168.50    │
-  │    .107      │  │    .108      │        │     .109       │
-  └──────────────┘  └──────────────┘        └────────────────┘
-          │                 │                          │
-  ┌───────▼──────┐  ┌───────▼──────┐        ┌────────▼───────┐
-  │  Windows     │  │  Windows 11  │        │ Security Onion │
-  │  Server 2022 │  │  Workstation │        │  192.168.50    │
-  │ 192.168.50.10│  │ 192.168.50   │        │     .20        │
-  │  (lab.local) │  │    .111      │        └────────────────┘
-  └──────────────┘  └──────────────┘
+| Area | Technologies |
+| --- | --- |
+| Virtualization | Proxmox VE, Linux bridges |
+| Network security | pfSense, segmentation, DHCP/DNS, Tailscale |
+| Identity | Windows Server, Active Directory, Windows 11 |
+| Web lab | Ubuntu Server, Docker, DVWA, WebGoat |
+| Testing | Kali Linux, Metasploitable |
+| Monitoring | Security Onion, Zeek, Suricata, Elastic Stack concepts |
 
-Remote Access: Tailscale (pfSense as subnet router)
-Advertised routes: 192.168.1.0/24, 192.168.50.0/24
-```
+## Network segmentation and security design
 
----
+- pfSense separates the internal lab from the upstream network.
+- Administrative addresses, domains, hostnames, usernames, and remote-access identifiers are redacted.
+- Tailscale provides a private administration path rather than public management ports.
+- Security Onion is positioned to observe mirrored lab traffic.
 
-##  VM Inventory
+## Systems and virtual machines
 
-| VM ID | Name | OS | IP | Role |
-|-------|------|----|----|------|
-| 100 | pfsense | FreeBSD (pfSense) | 192.168.50.1 (LAN) / 192.168.1.63 (WAN) | Firewall / Gateway / DHCP |
-| 101 | kali-attacker | Kali Linux | 192.168.50.107 | Attacker machine |
-| 102 | ubuntu-server | Ubuntu Server 24.04 LTS | 192.168.50.109 | Docker host (DVWA, WebGoat) |
-| 103 | windows-server | Windows Server 2022 | 192.168.50.10 | Active Directory Domain Controller |
-| 104 | windows-workstation | Windows 11 Enterprise | 192.168.50.111 | Domain-joined workstation |
-| 105 | security-onion | Security Onion 2.4 | 192.168.50.20 | Network monitoring / IDS / SIEM |
-| 200 | metasploitable | Metasploitable 2 | 192.168.50.108 | Vulnerable Linux target |
+| System | Purpose |
+| --- | --- |
+| Proxmox | Virtualization platform and virtual networking |
+| pfSense | Firewall, routing, DHCP/DNS, remote-access design |
+| Windows Server | Active Directory domain controller |
+| Windows 11 | Domain-joined workstation |
+| Ubuntu Server | Docker host for DVWA and WebGoat |
+| Kali Linux | Controlled testing workstation |
+| Metasploitable | Intentionally vulnerable training target |
+| Security Onion | IDS, NSM, and SIEM practice |
 
----
+## Skills demonstrated
 
-##  Lab Components
+Virtualization; network security; Active Directory; Windows and Linux administration; SIEM and network monitoring; IDS/NSM concepts; log analysis; threat hunting; vulnerability assessment; attack simulation; incident-response practice; and documentation.
 
-###  Offensive
-- **Kali Linux** — Full attacker workstation with all standard Kali tools pre-installed
-- **Metasploit Framework** — Available on Kali for exploitation
+## Security monitoring and defensive operations
 
-###  Vulnerable Targets
-- **Metasploitable 2** — Intentionally vulnerable Linux VM for network/service exploitation practice
-- **DVWA (Damn Vulnerable Web App)** — Dockerized web app for SQL injection, XSS, file upload, command injection, and more
-- **WebGoat** — OWASP's interactive web vulnerability learning platform
+Security Onion is configured as the monitoring platform. The lab supports practice with Zeek and Suricata telemetry, event review, investigation notes, and defensive workflow development. Specific detections or incident outcomes are not claimed unless documented in a walkthrough.
 
-###  Infrastructure
-- **pfSense** — Primary firewall, DHCP server, DNS forwarder, and Tailscale subnet router
-- **Windows Server 2022** — Active Directory Domain Controller for `lab.local`
-  - Domain: `lab.local`
-  - Users: `jsmith` (standard user), `labadmin` (domain admin)
-- **Windows 11 Workstation** — Domain-joined endpoint simulating a corporate workstation
+## Offensive-security testing conducted in the isolated lab
 
-###  Defensive / Monitoring
-- **Security Onion 2.4 (Standalone)** — Full monitoring stack including:
-  - Zeek (network analysis)
-  - Suricata (IDS/IPS)
-  - Elasticsearch + Kibana (log storage and visualization)
-  - Logstash (log pipeline)
-  - Elastalert (alerting)
-  - SOC web interface
+Testing is limited to lab-owned, intentionally vulnerable systems such as Metasploitable, DVWA, and WebGoat. Exercises focus on scoped vulnerability assessment and attack simulation, with monitoring and response practice where applicable.
 
----
+## Repository structure
 
-##  Remote Access
-
-Remote access is handled via **Tailscale** with pfSense configured as a subnet router. This allows access to all lab VMs (`192.168.50.0/24`) and the Proxmox host (`192.168.1.0/24`) from anywhere without exposing any ports publicly.
-
-**Tailscale Machines:**
-- `homelab` — pfSense node (subnet router)
-- `kali-attacker` — Kali Linux VM
-
-**Approved subnet routes:**
-- `192.168.1.0/24` (Proxmox/work network)
-- `192.168.50.0/24` (lab VM network)
-
----
-
-##  Docker Services (Ubuntu Server)
-
-| Service | Port | URL |
-|---------|------|-----|
-| DVWA | 8080 | http://192.168.50.109:8080 |
-| WebGoat | 8081 | http://192.168.50.109:8081/WebGoat |
-
-Both containers are configured with `--restart always` to survive reboots.
-
----
-
-##  Access Methods
-
-| VM | Method | Address |
-|----|--------|---------|
-| Proxmox Web UI | HTTPS | https://192.168.1.200:8006 |
-| pfSense Web GUI | HTTP | http://192.168.1.63 |
-| Kali | SSH | ssh kali@192.168.50.107 |
-| Ubuntu Server | SSH | ssh user@192.168.50.109 |
-| Windows Server | RDP | 192.168.50.10 |
-| Windows Workstation | RDP | 192.168.50.111 |
-| Security Onion | HTTPS | https://192.168.50.20 |
-
----
-
-##  Attack Scenarios
-
-This lab supports a wide range of offensive security exercises:
-
-- **Network exploitation** — Metasploit against Metasploitable 2 services
-- **Web application attacks** — SQL injection, XSS, CSRF, file upload on DVWA/WebGoat
-- **Active Directory attacks** — Password spraying, Kerberoasting, Pass the Hash, lateral movement
-- **Privilege escalation** — From `jsmith` workstation access to domain admin
-- **Detection & response** — Monitor all attacks in real time via Security Onion
-
----
-
-##  Repository Structure
-
-```
-cybersecurity-homelab/
+```text
+.
 ├── README.md
-├── diagrams/
-│   └── network-diagram.svg
-└── configs/
-    ├── pfsense/
-    │   └── notes.md
-    ├── proxmox/
-    │   └── notes.md
-    └── kali/
-        └── notes.md
+├── architecture/
+├── configs/
+├── detections/
+├── screenshots/
+└── walkthroughs/
 ```
 
----
+## Screenshots
 
-##  Status
+Sanitized screenshots will be added after review for secrets and identifying infrastructure details. Placeholder: Security Onion monitoring view and sanitized network topology.
 
-| Component | Status |
-|-----------|--------|
-| Proxmox hypervisor | ✅ Running |
-| pfSense firewall | ✅ Running |
-| Tailscale remote access | ✅ Configured |
-| Kali Linux | ✅ Running |
-| Metasploitable 2 | ✅ Running |
-| Ubuntu Server + Docker | ✅ Running |
-| DVWA | ✅ Running |
-| WebGoat | ✅ Running |
-| Windows Server 2022 (AD) | ✅ Running |
-| Windows 11 Workstation | ✅ Running |
-| Security Onion | ✅ Running |
+## Current progress
+
+The hypervisor, firewall/router, Active Directory components, Windows workstation, Ubuntu web-lab host, Kali, Metasploitable, Security Onion, and remote-access design are documented. Evidence-based walkthroughs are the next priority.
+
+## Future roadmap
+
+- Add sanitized screenshots and validation evidence.
+- Document firewall policy decisions and network-flow expectations.
+- Add detection hypotheses, triage notes, and threat-hunting exercises.
+- Publish scoped attack-and-detection walkthroughs only when outcomes are documented.
+
+## Ethical-use disclaimer
+
+All offensive-security testing is performed only against systems owned by me inside an isolated lab. Nothing here is intended for unauthorized access. Secrets and identifying infrastructure details have been removed from the public repository.

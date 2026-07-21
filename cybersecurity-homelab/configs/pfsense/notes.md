@@ -1,22 +1,18 @@
 # pfSense Configuration Notes
 
-## Network Interfaces
+## Purpose
+pfSense provides routing, policy enforcement, DHCP, and DNS services for the isolated homelab.
 
-| Interface | Name | IP | Network |
-|-----------|------|----|---------|
-| vtnet0 | LAN | 192.168.50.1/24 | Lab VM network (vmbr1) |
-| vtnet1 | WAN | 192.168.1.63/24 (DHCP) | Work/upstream network (vmbr0) |
+## Segmentation design
+- WAN connects to the upstream network; its address is intentionally omitted.
+- LAN serves the internal lab segment using <LAB_SUBNET> and <PFSENSE_ADDRESS> in public examples.
+- DHCP leases and DNS records support lab systems without publishing real hostnames or addresses.
+- Firewall policy permits only the flows required for administration, updates, and approved lab exercises.
 
-## DHCP Server (LAN)
-- Range: 192.168.50.100 - 192.168.50.200
-- Gateway: 192.168.50.1
-- DNS: 8.8.8.8, 8.8.4.4
+## Administrative safeguards
+- Administration is performed over HTTPS from an authorized management path.
+- Configuration exports, firewall backups, and logs remain private because they can contain infrastructure details.
+- Rule changes are documented with purpose, affected segment, verification steps, and rollback considerations.
 
-## Tailscale
-- Package: pfSense-pkg-Tailscale
-- Role: Subnet router
-- Routes approved in Tailscale admin console
-
-## Web GUI Access
--Management protocol: HTTPS
-
+## Validation
+After a policy change, verify expected connectivity, confirm unwanted paths remain blocked, and record the result in the relevant walkthrough or change note.
